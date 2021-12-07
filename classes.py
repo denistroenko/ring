@@ -437,16 +437,19 @@ class Ring:
 
                     # Если только сегодняшние
                     if only_today_files:
-
-                        # Получаем дату изм. файла средствами ОС
-                        date_modify = os.path.getmtime(file)
-                        # Преобразуем в локальное время (будет строка)
-                        date_modify = time.ctime(date_modify)
-                        # Преобразуем в datetime.datetime
-                        date_modify = datetime.datetime.strptime(
-                                date_modify, "%a %b %d %H:%M:%S %Y")
-                        date_modify = str(date_modify)[:10]
-
+                        try:
+                            # Получаем дату изм. файла средствами ОС
+                            date_modify = os.path.getmtime(file)
+                            # Преобразуем в локальное время (будет строка)
+                            date_modify = time.ctime(date_modify)
+                            # Преобразуем в datetime.datetime
+                            date_modify = datetime.datetime.strptime(
+                                    date_modify, "%a %b %d %H:%M:%S %Y")
+                            date_modify = str(date_modify)[:10]
+                        except FileNotFoundError:
+                            console.print(color='yellow',
+                                          msg='Файл больше не существует!',
+                                          )
                         # Если не сегодняшний - пропустить итерацию
                         if date_now != date_modify:
                             print(' НЕСВЕЖИЙ!')
