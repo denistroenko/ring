@@ -458,10 +458,13 @@ class Ring:
                     # Записываем файл в архив
                     try:
                         zip_file.write(file, arcname)
+
                     except FileNotFoundError:
-                        console.print(color='yellow',
-                                      msg='Файл больше не существует!',
-                                      )
+                        console.print(color='yellow', msg='Файл больше не существует!')
+                        continue
+
+                    except Exception:
+                        console.print(color='red', msg='Критическая ошибка')
                         continue
 
                     # Получаем сжатый размер файла в архиве
