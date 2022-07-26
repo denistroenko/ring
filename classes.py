@@ -420,10 +420,17 @@ class Ring:
                         file_print += f'{" " * (54 - len(file_print))}'
 
                     # Печатаем имя файла
-                    print('+ {}'.format(file_print),
-                          end=' ',
-                          flush=True,
-                          )
+                    try:
+                        print('+ {}'.format(file_print),
+                              end=' ',
+                              flush=True,
+                              )
+                    except UnicodeEncodeError:
+                        print('ОШИБКА КОДИРОВКИ',
+                              end=' ',
+                              flush=True,
+                              )
+
 
                     ### ТРЕБУЕТ ИСПРАВЛЕНИЯ SOURCE_DIRS ### !!! !!! !!!
                     # Имя файла внутри zip-архива такое:
