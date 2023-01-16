@@ -446,6 +446,11 @@ def show_mode():
          f'{human_space(total_space)}')
 
     send_emails()
+
+    run_period = config.get('run', 'period')
+    if run_period == 'yes':
+        umount_remote_source()
+
     sys.exit()
 
 
@@ -859,6 +864,7 @@ def export_config():
 
 def umount_remote_source():
     type_remote_source = config.get('remote_source', 'type')
+    path = config.get('remote_source', 'net_path')
 
     if type_remote_source == 'smb':
         target = config.get('source', 'dir')
@@ -1221,7 +1227,6 @@ def main():
         if ok:
             cut_mode()
         show_mode()
-        umount_remote_source()
         sys.exit()
 
     if 'archive' in args:
