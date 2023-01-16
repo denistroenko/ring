@@ -857,6 +857,25 @@ def export_config():
     full_path = '{}config_exp'.format(APP_DIR)
     config.write_file(full_path)
 
+def umount_remote_source():
+    type_remote_source = config.get('remote_source', 'type')
+
+    if type_remote_source == 'smb':
+        target = config.get('source', 'dir')
+
+        console.print(
+            'Демонтирую удаленный источник {}... '.format(path),
+            end = '',
+            effect = '6',
+            flush = True,
+        )
+        try:
+            sh.umount(target)
+            console.print('ok', color = 'green')
+        except:
+            logger.exception(Exception)
+            console.print('ok', color = 'green')
+
 
 # ПЕРЕДЕЛАТЬ: clean & pep8
 def mount_remote_source():
@@ -1202,6 +1221,7 @@ def main():
         if ok:
             cut_mode()
         show_mode()
+        umount_remote_source()
         sys.exit()
 
     if 'archive' in args:
