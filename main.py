@@ -860,7 +860,7 @@ def export_config():
     по сути - вызвывает метод объекта config
     """
     full_path = '{}config_exp'.format(APP_DIR)
-    config.write_file(full_path)
+    config.write_file(full_path, comment='''"""''')
 
 def umount_remote_source():
     type_remote_source = config.get('remote_source', 'type')
@@ -1101,7 +1101,7 @@ def main():
         apply_alternative_config_file()
 
     # Read config file
-    config.read_file(CONFIG_FILE)
+    config.read_file(CONFIG_FILE, comment='''"""''')
 
     ok = fix_config()
     if ok == False:
